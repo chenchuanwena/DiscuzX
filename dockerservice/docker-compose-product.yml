@@ -13,7 +13,7 @@ services:
       - VIRTUAL_HOST=bbs.faqself.com
       - LETSENCRYPT_HOST=bbs.faqself.com
       #- PHP_DATE_TIMEZONE=PRC
-      - HTTPS_METHOD=noredirect
+     # - HTTPS_METHOD=noredirect
       - php.yaf.environ=pre
       - php.post_max_size=100M
       - php.upload_max_filesize=100M
