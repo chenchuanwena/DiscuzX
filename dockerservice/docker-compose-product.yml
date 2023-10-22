@@ -1,0 +1,37 @@
+version: '3'
+services:
+    discuzx:
+      build:
+         context: ./
+      image: discuzx
+      container_name: discuzx
+      expose:
+      - "443"
+      - "80"
+      environment:
+      - WEB_DOCUMENT_ROOT=/project
+      - VIRTUAL_HOST=bbs.faqself.com
+      - LETSENCRYPT_HOST=bbs.faqself.com
+      #- PHP_DATE_TIMEZONE=PRC
+      - HTTPS_METHOD=noredirect
+      - php.yaf.environ=pre
+      - php.post_max_size=100M
+      - php.upload_max_filesize=100M
+      - php.session.save_handler=redis
+      - php.session.save_path=tcp://redis:6379
+      - php.session.gc_maxlifetime=864000
+      volumes:
+      - ../upload:/project
+      - ../../data:/data
+      - /etc/localtime:/etc/localtime
+      - /var/spool/cron/crontabs:/var/spool/cron/crontabs
+     # - ./supervisor.conf:/opt/docker/etc/supervisor.d/project.conf
+      - ./socket.io.nginx.conf:/opt/docker/etc/nginx/vhost.common.d/10-location-root.conf
+      networks: 
+      - default
+
+networks:
+  default:
+    external:
+      name: docker_network
+
